@@ -5,61 +5,112 @@
 
         <div class="container my-5">
             <div class="row justify-content-center">
-                <div class="col-md-8" data-aos="fade-up" data-aos-duration="1000">
-                    <div class="card shadow border-0">
-                        <div class="card-body p-4">
-                            <h3 class="text-center text-primary mb-4" data-aos="zoom-in" data-aos-delay="200">Sign Up</h3>
+                <div class="col-lg-7 col-md-9" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="card shadow-lg border-0 rounded-4">
+                        <div class="card-body p-5">
 
-                            <!-- enctype added for file upload -->
-                            <form class="row g-3" enctype="multipart/form-data">
-                                
+                            <!-- Heading -->
+                            <div class="text-center mb-4">
+                                <h2 class="fw-bold text-primary">Create Your Account</h2>
+                                <p class="text-muted mt-2">Join us today! Please fill in the information below.</p>
+                            </div>
+
+                            <!-- Flash Messages -->
+                            @if(session('success'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    {{ session('success') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            @endif
+
+                            @if(session('error'))
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    {{ session('error') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            @endif
+
+                            <!-- Signup Form -->
+                            <form class="row g-4" action="signup" method="POST" enctype="multipart/form-data" novalidate>
+                                @csrf
+
                                 <!-- Profile Image -->
-                                <div class="col-12" data-aos="fade-up" data-aos-delay="250">
-                                    <label for="profileImage" class="form-label">Profile Image</label>
+                                <div class="col-12">
+                                    <label for="profileImage" class="form-label fw-semibold">Profile Image <span class="text-danger">*</span></label>
                                     <input type="file" class="form-control" id="profileImage" name="profileImage" accept="image/*" required>
+                                    @error('profileImage') <small class="text-danger">{{ $message }}</small> @enderror
                                 </div>
 
-                                <div class="col-md-6" data-aos="fade-right" data-aos-delay="300">
-                                    <label for="inputEmail4" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="inputEmail4" required>
+                                <!-- First Name -->
+                                <div class="col-md-4">
+                                    <label for="firstName" class="form-label fw-semibold">First Name <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="firstName" name="first_name" placeholder="John" required>
+                                    @error('first_name') <small class="text-danger">{{ $message }}</small> @enderror
                                 </div>
-                                <div class="col-md-6" data-aos="fade-left" data-aos-delay="300">
-                                    <label for="inputPassword4" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="inputPassword4" required>
+
+                                <!-- Middle Name (Optional) -->
+                                <div class="col-md-4">
+                                    <label for="middleName" class="form-label fw-semibold">Middle Name</label>
+                                    <input type="text" class="form-control" id="middleName" name="middle_name" placeholder="Optional">
+                                    @error('middle_name') <small class="text-danger">{{ $message }}</small> @enderror
                                 </div>
-                                <div class="col-12" data-aos="fade-right" data-aos-delay="400">
-                                    <label for="inputAddress" class="form-label">Address</label>
-                                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+
+                                <!-- Last Name -->
+                                <div class="col-md-4">
+                                    <label for="lastName" class="form-label fw-semibold">Last Name <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="lastName" name="last_name" placeholder="Doe" required>
+                                    @error('last_name') <small class="text-danger">{{ $message }}</small> @enderror
                                 </div>
-                                <div class="col-12" data-aos="fade-left" data-aos-delay="400">
-                                    <label for="inputAddress2" class="form-label">Address 2</label>
-                                    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+
+                                <!-- Email -->
+                                <div class="col-md-6">
+                                    <label for="inputEmail" class="form-label fw-semibold">Email Address <span class="text-danger">*</span></label>
+                                    <input type="email" class="form-control" id="inputEmail" name="email" placeholder="name@example.com" required>
+                                    @error('email') <small class="text-danger">{{ $message }}</small> @enderror
                                 </div>
-                                <div class="col-md-6" data-aos="fade-right" data-aos-delay="500">
-                                    <label for="inputCity" class="form-label">City</label>
-                                    <input type="text" class="form-control" id="inputCity">
+
+                                <!-- Password -->
+                                <div class="col-md-6">
+                                    <label for="inputPassword" class="form-label fw-semibold">Password <span class="text-danger">*</span></label>
+                                    <input type="password" class="form-control" id="inputPassword" name="password" placeholder="********" required minlength="6">
+                                    <small class="text-muted">At least 6 characters</small>
+                                    @error('password') <small class="text-danger">{{ $message }}</small> @enderror
                                 </div>
-                                <div class="col-md-4" data-aos="fade-up" data-aos-delay="500">
-                                    <label for="inputState" class="form-label">State</label>
-                                    <select id="inputState" class="form-select">
-                                        <option selected>Choose...</option>
-                                        <option>...</option>
-                                    </select>
+
+                                <!-- Address -->
+                                <div class="col-12">
+                                    <label for="inputAddress" class="form-label fw-semibold">Address</label>
+                                    <input type="text" class="form-control" id="inputAddress" name="address" placeholder="1234 Main St">
+                                    @error('address') <small class="text-danger">{{ $message }}</small> @enderror
                                 </div>
-                                <div class="col-md-2" data-aos="fade-left" data-aos-delay="500">
-                                    <label for="inputZip" class="form-label">Zip</label>
-                                    <input type="text" class="form-control" id="inputZip">
+
+                                <!-- City -->
+                                <div class="col-md-6">
+                                    <label for="inputCity" class="form-label fw-semibold">City</label>
+                                    <input type="text" class="form-control" id="inputCity" name="city">
+                                    @error('city') <small class="text-danger">{{ $message }}</small> @enderror
                                 </div>
-                                <div class="col-12" data-aos="fade-up" data-aos-delay="600">
+
+                                <!-- Terms -->
+                                <div class="col-12">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label" for="gridCheck">
-                                            Accept Terms & Conditions
+                                        <input class="form-check-input" type="checkbox" id="termsCheck" required>
+                                        <label class="form-check-label" for="termsCheck">
+                                            I agree to the <a href="#" class="text-decoration-none">Terms & Conditions</a>
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-12" data-aos="zoom-in" data-aos-delay="700">
-                                    <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+
+                                <!-- Submit -->
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold shadow-sm">Sign Up</button>
+                                </div>
+
+                                <!-- Login Redirect -->
+                                <div class="col-12 text-center">
+                                    <p class="text-muted mt-3 mb-0">Already have an account?
+                                        <a href="/login" class="text-primary fw-semibold">Log in</a>
+                                    </p>
                                 </div>
                             </form>
 
@@ -68,5 +119,6 @@
                 </div>
             </div>
         </div>
+
     </x-slot>
 </x-layout>

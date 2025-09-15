@@ -1,5 +1,5 @@
 <x-layout>
-    <x-slot name="title">Admin Dashboard | My Blog</x-slot>
+    <x-slot name="title">Manage Blogs | Admin</x-slot>
     <x-slot name="main">
 
         <div class="d-flex">
@@ -11,40 +11,19 @@
                 <!-- Topbar -->
                 <x-admintopbar></x-admintopbar>
 
-                <!-- Content Area -->
+                <!-- Content -->
                 <div class="container-fluid py-4">
 
-                    <!-- Stats -->
-                    <div class="row g-4 mb-4">
-                        <div class="col-md-3">
-                            <div class="card shadow-sm border-0 text-center p-3">
-                                <h6 class="text-muted">Total Blogs</h6>
-                                <h3 class="fw-bold">120</h3>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card shadow-sm border-0 text-center p-3">
-                                <h6 class="text-muted">Categories</h6>
-                                <h3 class="fw-bold">10</h3>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card shadow-sm border-0 text-center p-3">
-                                <h6 class="text-muted">Users</h6>
-                                <h3 class="fw-bold">450</h3>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card shadow-sm border-0 text-center p-3">
-                                <h6 class="text-muted">Comments</h6>
-                                <h3 class="fw-bold">320</h3>
-                            </div>
-                        </div>
+                    <!-- Add Blog Button -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="fw-bold">All Blogs</h4>
+                        <a href="create" class="btn btn-primary">
+                            <i class="bi bi-plus-circle me-2"></i> Add New Blog
+                        </a>
                     </div>
 
-                    <!-- Recent Blogs -->
+                    <!-- Blogs Table -->
                     <div class="card shadow-sm border-0">
-                        <div class="card-header bg-white fw-bold">Recent Blogs</div>
                         <div class="card-body">
                             <table class="table table-hover align-middle">
                                 <thead class="table-light">
@@ -65,8 +44,12 @@
                                         <td>Admin</td>
                                         <td>Sep 14, 2025</td>
                                         <td class="text-end">
-                                            <a href="edit" class="btn btn-sm btn-primary me-1">Edit</a>
-                                            <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                                            <a href="edit" class="btn btn-sm btn-primary me-1">
+                                                <i class="bi bi-pencil"></i> Edit
+                                            </a>
+                                            <a href="#" class="btn btn-sm btn-danger">
+                                                <i class="bi bi-trash"></i> Delete
+                                            </a>
                                         </td>
                                     </tr>
                                     <tr>
@@ -76,10 +59,15 @@
                                         <td>John Doe</td>
                                         <td>Sep 13, 2025</td>
                                         <td class="text-end">
-                                            <a href="edit" class="btn btn-sm btn-primary me-1">Edit</a>
-                                            <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                                            <a href="edit" class="btn btn-sm btn-primary me-1">
+                                                <i class="bi bi-pencil"></i> Edit
+                                            </a>
+                                            <a href="#" class="btn btn-sm btn-danger">
+                                                <i class="bi bi-trash"></i> Delete
+                                            </a>
                                         </td>
                                     </tr>
+                                    <!-- More blogs here dynamically -->
                                 </tbody>
                             </table>
                         </div>
