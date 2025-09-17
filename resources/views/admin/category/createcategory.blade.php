@@ -4,40 +4,12 @@
 
         <div class="d-flex">
             <!-- Sidebar -->
-            <aside class="bg-dark text-white p-3 vh-100 position-fixed" style="width: 250px;">
-                <h3 class="text-center fw-bold mb-4">Admin</h3>
-                <ul class="nav flex-column">
-                    <li class="nav-item mb-2">
-                        <a href="/admin" class="nav-link text-white"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a href="/admin/blogs" class="nav-link text-white"><i class="bi bi-journal-text me-2"></i> Blogs</a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a href="/admin/categories" class="nav-link active text-white bg-primary rounded"><i class="bi bi-folder me-2"></i> Categories</a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a href="/admin/users" class="nav-link text-white"><i class="bi bi-people me-2"></i> Users</a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a href="/admin/comments" class="nav-link text-white"><i class="bi bi-chat-left-text me-2"></i> Comments</a>
-                    </li>
-                </ul>
-                <div class="mt-auto">
-                    <a href="/logout" class="btn btn-outline-light w-100"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
-                </div>
-            </aside>
+            <x-adminsidebar></x-adminsidebar>
 
             <!-- Main Content -->
             <div class="flex-grow-1" style="margin-left: 250px;">
                 <!-- Topbar -->
-                <nav class="navbar navbar-light bg-white shadow-sm px-4 sticky-top">
-                    <span class="navbar-brand fw-bold">Add Category</span>
-                    <div class="d-flex align-items-center">
-                        <span class="me-3">Welcome, Admin</span>
-                        <img src="https://via.placeholder.com/40" class="rounded-circle" alt="Admin">
-                    </div>
-                </nav>
+                <x-admintopbar></x-admintopbar> 
 
                 <!-- Content -->
                 <div class="container-fluid py-4">

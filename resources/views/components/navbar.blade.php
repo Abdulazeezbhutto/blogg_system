@@ -23,19 +23,44 @@
                 </li>
             </ul>
 
-
-            <!-- Right Menu (Login / Signup) -->
+            <!-- Right Menu (Login / Signup OR User Dropdown) -->
             <ul class="navbar-nav ms-lg-3">
-                @if (!Request::is('login'))
-                    <li class="nav-item">
-                        <a class="btn btn-outline-primary me-2" href="{{ url('login') }}">Login</a>
-                    </li>
-                @endif
+                @if(session()->has('LoggedUser'))
+                    <!-- User Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle btn btn-outline-primary" href="#" id="userDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ session('LoggedUser')->first_name ?? 'User' }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li>
+                                @if(session('LoggedUser')->role === 'admin')
+                                    <a class="dropdown-item" href="{{ url('profile') }}">Profile</a>
+                                @elseif(session('LoggedUser')->role === 'user')
+                                    <a class="dropdown-item" href="{{ url('userprofile') }}">Profile</a>
+                                @endif
+                            </li>
 
-                @if (!Request::is('signup'))
-                    <li class="nav-item">
-                        <a class="btn btn-primary" href="{{ url('signup') }}">Sign Up</a>
+                            <li>
+                                <form action="{{ url('logout') }}" method="GET" class="d-inline">
+                                    <button type="submit" class="dropdown-item">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
                     </li>
+                @else
+                    <!-- Login / Signup Buttons -->
+                    @if (!Request::is('login'))
+                        <li class="nav-item">
+                            <a class="btn btn-outline-primary me-2" href="{{ url('login') }}">Login</a>
+                        </li>
+                    @endif
+
+                    @if (!Request::is('signup'))
+                        <li class="nav-item">
+                            <a class="btn btn-primary" href="{{ url('signup') }}">Sign Up</a>
+                        </li>
+                    @endif
                 @endif
             </ul>
         </div>

@@ -2,6 +2,6 @@
                     <span class="navbar-brand fw-bold">Dashboard</span>
                     <div class="d-flex align-items-center">
                         <span class="me-3">Welcome, User</span>
-                        <img src="https://via.placeholder.com/40" class="rounded-circle" alt="Admin">
+                        <img src="https://via.placeholder.com/40" class="rounded-circle" alt="User">
                     </div>
                 </nav>

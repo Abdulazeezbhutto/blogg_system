@@ -9,4 +9,7 @@ class UserController extends Controller
     function dashboard(){
         return view("user.dashboard");
     }
+    function profile(){
+        return view("user.profile");
+    }
 }
