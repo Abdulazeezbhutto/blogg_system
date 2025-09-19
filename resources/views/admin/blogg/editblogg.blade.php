@@ -1,7 +1,6 @@
 <x-layout>
     <x-slot name="title">Edit Blog | Admin</x-slot>
     <x-slot name="main">
-
         <div class="d-flex">
             <!-- Sidebar -->
             <x-adminsidebar></x-adminsidebar>
@@ -33,64 +32,65 @@
                             @endif
 
                             <!-- Blog Form -->
-                            <form action="/admin/blogs/update/1" method="POST" enctype="multipart/form-data" class="row g-4">
+                            <form action="{{ url('updateblog') }}" method="POST" enctype="multipart/form-data" class="row g-4">
                                 @csrf
-                                @method('PUT')
-
+                            
+                                <input type="hidden" name="id" value="{{ $blog->id }}">
+                                
                                 <!-- Blog Title -->
                                 <div class="col-12">
-                                    <label for="title" class="form-label fw-semibold">Blog Title <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title"
-                                        value="How to Build Modern Web Apps" required>
                                     @error('title')
-                                        <small class="text-danger">{{ $message }}</small>
+                                        <div class="text-danger mb-1">{{ $message }}</div>
                                     @enderror
+                                    <label for="title" class="form-label fw-semibold">Blog Title <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control @error('title') is-invalid @enderror" 
+                                           id="title" name="title"
+                                           value="{{ old('title', $blog->title) }}" required>
                                 </div>
 
                                 <!-- Category -->
                                 <div class="col-md-6">
-                                    <label for="category" class="form-label fw-semibold">Category <span class="text-danger">*</span></label>
-                                    <select id="category" name="category" class="form-select @error('category') is-invalid @enderror" required>
+                                    @error('category_id')
+                                        <div class="text-danger mb-1">{{ $message }}</div>
+                                    @enderror
+                                    <label for="category_id" class="form-label fw-semibold">Category <span class="text-danger">*</span></label>
+                                    <select id="category_id" name="category_id" 
+                                            class="form-select @error('category_id') is-invalid @enderror" required>
                                         <option disabled>Choose category...</option>
-                                        <option value="Tech" selected>Tech</option>
-                                        <option value="Programming">Programming</option>
-                                        <option value="Lifestyle">Lifestyle</option>
-                                        <option value="Education">Education</option>
+                                        @foreach($categories as $category)
+                                            <option value="{{ $category->id }}" 
+                                                {{ old('category_id', $blog->category_id) == $category->id ? 'selected' : '' }}>
+                                                {{ $category->name }}
+                                            </option>
+                                        @endforeach
                                     </select>
-                                    @error('category')
-                                        <small class="text-danger">{{ $message }}</small>
-                                    @enderror
-                                </div>
-
-                                <!-- Tags -->
-                                <div class="col-md-6">
-                                    <label for="tags" class="form-label fw-semibold">Tags</label>
-                                    <input type="text" class="form-control @error('tags') is-invalid @enderror" id="tags" name="tags"
-                                        value="PHP, Laravel, Web Development">
-                                    <small class="text-muted">Separate tags with commas (,)</small>
-                                    @error('tags')
-                                        <small class="text-danger">{{ $message }}</small>
-                                    @enderror
                                 </div>
 
                                 <!-- Content -->
                                 <div class="col-12">
-                                    <label for="content" class="form-label fw-semibold">Content <span class="text-danger">*</span></label>
-                                    <textarea class="form-control @error('content') is-invalid @enderror" id="content" name="content" rows="6" required>Here goes the existing blog content...</textarea>
                                     @error('content')
-                                        <small class="text-danger">{{ $message }}</small>
+                                        <div class="text-danger mb-1">{{ $message }}</div>
                                     @enderror
+                                    <label for="content" class="form-label fw-semibold">Content <span class="text-danger">*</span></label>
+                                    <textarea class="form-control @error('blog_content') is-invalid @enderror" 
+                                              id="content" name="blog_content" rows="6" required>{{ old('blog_content', $blog->content) }}</textarea>
                                 </div>
 
                                 <!-- Featured Image -->
                                 <div class="col-12">
-                                    <label for="image" class="form-label fw-semibold">Featured Image</label>
-                                    <input type="file" class="form-control mb-2 @error('image') is-invalid @enderror" id="image" name="image" accept="image/*">
                                     @error('image')
-                                        <small class="text-danger">{{ $message }}</small>
+                                        <div class="text-danger mb-1">{{ $message }}</div>
                                     @enderror
+                                    <label for="image" class="form-label fw-semibold">Featured Image</label>
+                                    <input type="file" class="form-control mb-2 @error('image') is-invalid @enderror" 
+                                           id="image" name="image" accept="image/*">
+                                    
                                     <div>
-                                        <img src="https://via.placeholder.com/200x120" alt="Current Image" class="img-thumbnail">
+                                        @if($blog->image)
+                                            <img src="{{ asset('storage/' . $blog->image) }}" alt="Current Image" class="img-thumbnail" width="200">
+                                        @else
+                                            <img src="https://via.placeholder.com/200x120" alt="Current Image" class="img-thumbnail">
+                                        @endif
                                         <small class="text-muted d-block mt-1">Current Image</small>
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@
                                 <!-- Submit -->
                                 <div class="col-12 d-flex gap-2">
                                     <button type="submit" class="btn btn-success fw-semibold">Update Blog</button>
-                                    <a href="blogg" class="btn btn-secondary">Cancel</a>
+                                    <a href="{{ back()->getTargetUrl() }}" class="btn btn-secondary">Cancel</a>
                                 </div>
                             </form>
 

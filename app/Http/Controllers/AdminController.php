@@ -6,7 +6,7 @@ use App\Models\categories;
 use Illuminate\Http\Request;
 use App\Models\users;
 use App\Models\post;
-use Illuminate\Support\Facades\DB;  
+use Illuminate\Support\Facades\DB;
 class AdminController extends Controller
 {
     function dashboard()
@@ -28,11 +28,12 @@ class AdminController extends Controller
                 'user.middle_name as user_middle_name',
                 'user.last_name as user_last_name'
             )
+            ->orderBy('post.id', 'desc')
             ->get();
 
-            $categories = categories::all();
+        $categories = categories::all();
 
-        return view("admin.blogg.blogg", compact('blogs',"categories"));
+        return view("admin.blogg.blogg", compact('blogs', "categories"));
     }
 
     function create()
@@ -43,11 +44,7 @@ class AdminController extends Controller
 
     public function storeblog(Request $request)
     {
-        // ✅ Validation
-
-
-
-
+        // Validation
         $request->validate([
             'title' => 'required|string|max:255',
             'category_id' => 'required|exists:category,id',
@@ -55,7 +52,7 @@ class AdminController extends Controller
             'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ]);
 
-        // ✅ Image Upload Handling
+        // Image Upload Handling
         $imageName = null;
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -63,7 +60,7 @@ class AdminController extends Controller
             $image->move(public_path('uploads/blogs'), $imageName);
         }
 
-        // ✅ Store in DB
+        // Store in DB
         $blog = post::create([
             'title' => $request->title,
             'content' => $request->blog_content,
@@ -80,10 +77,65 @@ class AdminController extends Controller
     }
 
 
-    function edit()
+    function edit($id)
     {
-        return view("admin.blogg.editblogg");
+        $blog = post::findOrFail($id);
+        $categories = categories::all();
+        return view("admin.blogg.editblogg", compact('blog', 'categories'));
     }
+
+    public function updateblog(Request $request)
+    {
+        $user_id = $request->session()->get('LoggedUser')->id;
+        $request->validate([
+            "id" => "required|exists:post,id",   //  correct table name
+            "title" => "required|string|max:255",
+            "category_id" => "required|exists:category,id",
+            "blog_content" => "required|string",
+            "image" => "nullable|image|mimes:jpg,jpeg,png,gif|max:2048"
+        ]);
+
+        //image handler
+        $imageName = null;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/blogs'), $imageName);
+
+        }
+
+
+        //  Update in DB
+        $blog = post::findOrFail($request->id);
+        $result =$blog->update([
+            'title' => $request->title,
+            'content' => $request->blog_content,
+            'category_id' => $request->category_id,
+            'user_id' => $user_id,
+            'image' => $imageName ? 'uploads/blogs/' . $imageName : $blog->image,
+        ]);
+        if(!$result){
+            return redirect()->back()->with('error', 'Failed to update blog. Please try again.');
+        }else{
+        return redirect("blogg")->with('success', 'Blog updated successfully!');
+
+        }
+
+        
+    }
+
+    function deleteblog(Request $request){
+        // return $request->id;
+        $blog = post::findOrFail($request->id);
+        $result = $blog->delete();
+        if($result){
+                return redirect("blogg")->with("success","Blog deleted successfully");
+        }else{
+            return redirect()->back()->with('error', 'Failed to delete blog. Please try again.');
+        }
+    }
+
+
 
     function profil(Request $request)
     {

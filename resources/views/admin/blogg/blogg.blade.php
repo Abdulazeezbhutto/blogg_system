@@ -81,11 +81,12 @@
                                             <td>{{ $blog->created_at }}</td>
                                             <td>{{ $blog->updated_at }}</td>
                                             <td class="text-end">
-                                                <a href="" class="btn btn-sm btn-primary me-1"><i class="bi bi-pencil"></i>
+                                                <a href="edit/{{ $blog->id }}" class="btn btn-sm btn-primary me-1"><i class="bi bi-pencil"></i>
                                                     Edit</a>
-                                                <form action="" method="POST" class="d-inline"
+                                                <form action="deleteblog" method="POST" class="d-inline"
                                                     onsubmit="return confirm('Are you sure?');">
-                                                    @csrf @method('DELETE')
+                                                    @csrf 
+                                                    <input type="hidden" name="id" value="{{ $blog->id }}">
                                                     <button type="submit" class="btn btn-sm btn-danger"><i
                                                             class="bi bi-trash"></i> Delete</button>
                                                 </form>

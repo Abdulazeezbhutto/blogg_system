@@ -41,7 +41,7 @@ Route::middleware([auth::class])->group(function(){
     Route::get("admin", [AdminController::class, "dashboard"]);
     Route::get("blogg", [AdminController::class, "blogg"]);
     Route::get("create", [AdminController::class, "create"]);
-    Route::get("edit", [AdminController::class, "edit"]);
+    Route::get("edit/{id}", [AdminController::class, "edit"]);
     Route::get("profile", [AdminController::class, "profil"]);
     
     
@@ -66,11 +66,15 @@ Route::middleware([auth::class])->group(function(){
     //------------------------------------------------------------------------------
 
     Route::post("storeblog",[AdminController::class, "storeblog"]);
+    Route::post("updateblog",[AdminController::class, "updateblog"]);
+    Route::post("deleteblog",[AdminController::class, "deleteblog"]);
     //------------------------------------------------------------------------------------
     //end
     //-----------------------------------------------------------------------------------
     Route::get("listusers", [AdminusersController::class, "list"]);
-    Route::get("edituser", [AdminusersController::class, "edit"]);
+    Route::get("edituser/{id}", [AdminusersController::class, "edit"]);
+    Route::post("updateuser", [AdminusersController::class, "updateuser"]);
+    Route::post("deleteuser", [AdminusersController::class, "deleteuser"]);
     Route::get("adduser", [AdminusersController::class, "create"]);
     Route::get("listcomments", [AdminCommentsController::class, "list"]);
     Route::post("updateprofile", [AdminController::class, "updateprofile"]);
