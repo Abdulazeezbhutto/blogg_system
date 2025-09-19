@@ -43,9 +43,32 @@ Route::middleware([auth::class])->group(function(){
     Route::get("create", [AdminController::class, "create"]);
     Route::get("edit", [AdminController::class, "edit"]);
     Route::get("profile", [AdminController::class, "profil"]);
+    
+    
+    //-------------------------------------------------------------------------------
+    // Category Routes
+    //---------------------------------------------------------------------------------
     Route::get("listcategory", [CategoryController::class, "list"]);
     Route::get("createcategory", [CategoryController::class, "create"]);
-    Route::get("editcategory", [CategoryController::class, "edit"]);
+    Route::post("storecategory", [CategoryController::class, "store"]);
+    Route::get("editcategory/{id}", [CategoryController::class, "edit"]);
+    Route::post("updatecategory", [CategoryController::class, "update"]);
+    Route::post("deletecategory", [CategoryController::class, "deletecategory"]);
+
+    
+
+    //--------------------------------------------------------------------------------
+    // End
+    //-------------------------------------------------------------------------------
+
+    //----------------------------------------------------------------------------------
+    // blogg routes
+    //------------------------------------------------------------------------------
+
+    Route::post("storeblog",[AdminController::class, "storeblog"]);
+    //------------------------------------------------------------------------------------
+    //end
+    //-----------------------------------------------------------------------------------
     Route::get("listusers", [AdminusersController::class, "list"]);
     Route::get("edituser", [AdminusersController::class, "edit"]);
     Route::get("adduser", [AdminusersController::class, "create"]);

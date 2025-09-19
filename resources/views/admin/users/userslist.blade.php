@@ -16,9 +16,19 @@
                     <div class="card shadow-sm border-0">
                         <div class="card-header bg-primary text-white fw-bold d-flex justify-content-between align-items-center">
                             <span>Users List</span>
-                            <a href="adduser" class="btn btn-light btn-sm">
-                                <i class="bi bi-plus-circle me-1"></i> Add User
-                            </a>
+                            <div class="d-flex gap-2">
+                                <!-- Search Bar -->
+                                <form action="" method="GET" class="d-flex">
+                                    <input type="text" name="search" class="form-control form-control-sm"
+                                           placeholder="Search users...">
+                                    <button type="submit" class="btn btn-light btn-sm ms-2">
+                                        <i class="bi bi-search"></i> Search
+                                    </button>
+                                </form>
+                                <a href="adduser" class="btn btn-light btn-sm">
+                                    <i class="bi bi-plus-circle me-1"></i> Add User
+                                </a>
+                            </div>
                         </div>
                         <div class="card-body">
                             <table class="table table-hover align-middle">

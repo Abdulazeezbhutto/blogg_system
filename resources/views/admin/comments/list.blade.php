@@ -18,6 +18,18 @@
                             <span>Comments List</span>
                             <span class="badge bg-light text-dark">Total: 45</span>
                         </div>
+                        
+                        <!-- 🔍 Search Only -->
+                        <div class="card-body border-bottom pb-3">
+                            <form class="d-flex align-items-center">
+                                <input type="text" class="form-control form-control-sm me-2" style="max-width: 350px; width: 100%;" placeholder="Search by user or comment...">
+                                <button type="button" class="btn btn-sm btn-primary">
+                                    <i class="bi bi-search"></i> Search
+                                </button>
+                                <button type="reset" class="btn btn-sm btn-secondary ms-2">Reset</button>
+                            </form>
+                        </div>
+
                         <div class="card-body">
                             <table class="table table-hover align-middle">
                                 <thead class="table-light">
@@ -43,7 +55,7 @@
                                             </div>
                                         </td>
                                         <td>Great article! Very helpful.</td>
-                                        <td><a href="/blog/1" class="text-decoration-none">How to Build Modern Web Apps</a></td>
+                                        <td><a href="singlepost" class="text-decoration-none">How to Build Modern Web Apps</a></td>
                                         <td><span class="badge bg-success">Approved</span></td>
                                         <td>Sep 13, 2025</td>
                                         <td>
@@ -65,7 +77,7 @@
                                             </div>
                                         </td>
                                         <td>I think React is the best framework.</td>
-                                        <td><a href="/blog/2" class="text-decoration-none">Best JavaScript Frameworks</a></td>
+                                        <td><a href="singlepost" class="text-decoration-none">Best JavaScript Frameworks</a></td>
                                         <td><span class="badge bg-warning text-dark">Pending</span></td>
                                         <td>Sep 12, 2025</td>
                                         <td>
