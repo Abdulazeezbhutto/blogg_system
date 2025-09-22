@@ -8,23 +8,22 @@ use App\Http\Controllers\AdminCommentsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Middleware\auth;
+use App\Http\Controllers\PublicController;
 
 
-
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get("/",[PublicController::class,"homepage"]);
 
 
 
 //Public Routes ____________________________________________________________
 Route::view('/login', 'auth.loginform')->name('login');
 Route::view("signup","auth.signupform")->name("signup");
-Route::view("bloggs","bloggs")->name("bloggs");
-Route::view("category","category")->name("category");
-Route::view("singlepost","singleblogg")->name("singlepost");
+Route::get("bloggs",[PublicController::class,"bloggs"]);
+Route::get("category/{id}",[PublicController::class,"category"]);
+Route::get("singlepost/{id}",[PublicController::class,"singlepost"]);
 Route::view("about","about")->name("about");
 Route::view("contact","contactus")->name("contact");
+Route::post("addcomment",[PublicController::class, "addcomment"]);
 
 //Auth Routes ___________________________________________________________
 Route::post("signup",[AuthController::class,"signup"]);

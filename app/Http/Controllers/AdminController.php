@@ -6,14 +6,29 @@ use App\Models\categories;
 use Illuminate\Http\Request;
 use App\Models\users;
 use App\Models\post;
+use App\Models\comment;
 use Illuminate\Support\Facades\DB;
 class AdminController extends Controller
 {
     function dashboard()
     {
+        $total_blogs = post::count('*');
+        $total_categories = categories::count('*');
+        $total_users = users::count('*');
+        $total_comments = comment::count('*');
+
+        // return $total_blogs;
+
+        $blog_list = post::all();
 
 
-        return view("admin.dashboard");
+        return view("admin.dashboard", [
+            "total_bloggs" => $total_blogs,
+            "total_categories" => $total_categories,
+            "total_users" => $total_users,
+            "total_comments" => $total_comments,
+            "blog_list"=>$blog_list
+        ]);
     }
 
     function blogg()
@@ -107,30 +122,31 @@ class AdminController extends Controller
 
         //  Update in DB
         $blog = post::findOrFail($request->id);
-        $result =$blog->update([
+        $result = $blog->update([
             'title' => $request->title,
             'content' => $request->blog_content,
             'category_id' => $request->category_id,
             'user_id' => $user_id,
             'image' => $imageName ? 'uploads/blogs/' . $imageName : $blog->image,
         ]);
-        if(!$result){
+        if (!$result) {
             return redirect()->back()->with('error', 'Failed to update blog. Please try again.');
-        }else{
-        return redirect("blogg")->with('success', 'Blog updated successfully!');
+        } else {
+            return redirect("blogg")->with('success', 'Blog updated successfully!');
 
         }
 
-        
+
     }
 
-    function deleteblog(Request $request){
+    function deleteblog(Request $request)
+    {
         // return $request->id;
         $blog = post::findOrFail($request->id);
         $result = $blog->delete();
-        if($result){
-                return redirect("blogg")->with("success","Blog deleted successfully");
-        }else{
+        if ($result) {
+            return redirect("blogg")->with("success", "Blog deleted successfully");
+        } else {
             return redirect()->back()->with('error', 'Failed to delete blog. Please try again.');
         }
     }

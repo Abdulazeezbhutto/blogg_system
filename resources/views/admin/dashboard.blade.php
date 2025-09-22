@@ -21,7 +21,7 @@
                             <a href="blogg" class="text-decoration-none text-dark">
                                 <div class="card shadow-sm border-0 text-center p-3 h-100">
                                     <h6 class="text-muted">Total Blogs</h6>
-                                    <h3 class="fw-bold">120</h3>
+                                    <h3 class="fw-bold">{{ $total_bloggs }}</h3>
                                 </div>
                             </a>
                         </div>
@@ -31,7 +31,7 @@
                             <a href="listcategory" class="text-decoration-none text-dark">
                                 <div class="card shadow-sm border-0 text-center p-3 h-100">
                                     <h6 class="text-muted">Categories</h6>
-                                    <h3 class="fw-bold">10</h3>
+                                    <h3 class="fw-bold">{{ $total_categories }}</h3>
                                 </div>
                             </a>
                         </div>
@@ -41,7 +41,7 @@
                             <a href="listusers" class="text-decoration-none text-dark">
                                 <div class="card shadow-sm border-0 text-center p-3 h-100">
                                     <h6 class="text-muted">Users</h6>
-                                    <h3 class="fw-bold">450</h3>
+                                    <h3 class="fw-bold">{{ $total_users }}</h3>
                                 </div>
                             </a>
                         </div>
@@ -51,7 +51,7 @@
                             <a href="listcomments" class="text-decoration-none text-dark">
                                 <div class="card shadow-sm border-0 text-center p-3 h-100">
                                     <h6 class="text-muted">Comments</h6>
-                                    <h3 class="fw-bold">320</h3>
+                                    <h3 class="fw-bold">{{ $total_comments }}</h3>
                                 </div>
                             </a>
                         </div>
@@ -93,42 +93,39 @@
                         </div>
 
                         <div class="card-body">
-                            <table class="table table-hover align-middle">
-                                <thead class="table-light">
+                            <table class="table table-bordered table-hover align-middle shadow-sm">
+                                <thead class="table-primary text-center">
                                     <tr>
-                                        <th>#</th>
-                                        <th>Title</th>
-                                        <th>Category</th>
-                                        <th>Author</th>
-                                        <th>Date</th>
-                                        <th class="text-end">Actions</th>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Category</th>
+                                        <th scope="col">Author</th>
+                                        <th scope="col">Date</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>How to Build Modern Web Apps</td>
-                                        <td>Tech</td>
-                                        <td>Admin</td>
-                                        <td>Sep 14, 2025</td>
-                                        <td class="text-end">
-                                            <a href="edit" class="btn btn-sm btn-primary me-1">Edit</a>
-                                            <a href="#" class="btn btn-sm btn-danger">Delete</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Best JavaScript Frameworks</td>
-                                        <td>Programming</td>
-                                        <td>John Doe</td>
-                                        <td>Sep 13, 2025</td>
-                                        <td class="text-end">
-                                            <a href="edit" class="btn btn-sm btn-primary me-1">Edit</a>
-                                            <a href="#" class="btn btn-sm btn-danger">Delete</a>
-                                        </td>
-                                    </tr>
+                                    @foreach ($blog_list as $index => $blog)
+                                        <tr>
+                                            <td class="text-center fw-bold">{{ $index + 1 }}</td>
+                                            <td>{{ Str::limit($blog->title, 40) }}</td>
+                                            <td>
+                                                <span class="badge bg-info text-dark">
+                                                    {{ $blog->category_id ?? 'Uncategorized' }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <i class="bi bi-person-circle me-1 text-secondary"></i>
+                                                {{ $blog->user_id ?? 'Unknown' }}
+                                            </td>
+                                            <td class="text-muted">
+                                                <i class="bi bi-calendar3 me-1"></i>
+                                                {{ $blog->created_at->format('d M, Y') }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
+
                         </div>
                     </div>
 

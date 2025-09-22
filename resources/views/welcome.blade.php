@@ -21,42 +21,24 @@
             <div class="container">
                 <h2 class="text-center mb-5" data-aos="fade-down">Latest Posts</h2>
                 <div class="row g-4">
-                    <!-- Blog Card 1 -->
-                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
-                        <div class="card h-100">
-                            <img src="https://via.placeholder.com/600x400" class="card-img-top" alt="Blog 1">
-                            <div class="card-body">
-                                <h5 class="card-title">Blog Post One</h5>
-                                <p class="card-text">A quick preview of your blog content. Engaging and short intro text
-                                    goes here.</p>
-                                <a href="category" class="btn btn-primary">Read More</a>
+
+                    <!--category bloggs-->
+                    @foreach($posts_by_category as $blog)
+                        <!-- Blog Card 1 -->
+                        <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                            <div class="card h-100">
+                                <img src="{{ asset('uploads/blogs/'.$blog->image) }}" class="card-img-top" alt="Blog 1">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $blog->title }}</h5>
+
+                                    <p class="card-text">{{ Str::limit($blog->content, 50) }}</p>
+
+
+                                    <a href="category/{{ $blog->category_id}}" class="btn btn-primary">Read More</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- Blog Card 2 -->
-                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
-                        <div class="card h-100">
-                            <img src="https://via.placeholder.com/600x400" class="card-img-top" alt="Blog 2">
-                            <div class="card-body">
-                                <h5 class="card-title">Blog Post Two</h5>
-                                <p class="card-text">Highlight something interesting to attract readers. Keep it short
-                                    and catchy.</p>
-                                <a href="category" class="btn btn-primary">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Blog Card 3 -->
-                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
-                        <div class="card h-100">
-                            <img src="https://via.placeholder.com/600x400" class="card-img-top" alt="Blog 3">
-                            <div class="card-body">
-                                <h5 class="card-title">Blog Post Three</h5>
-                                <p class="card-text">Give visitors a reason to click. Summarize the value of the post
-                                    here.</p>
-                                <a href="category" class="btn btn-primary">Read More</a>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </section>
@@ -67,47 +49,27 @@
             <div class="container" data-aos="fade-up" data-aos-duration="1000">
                 <h2 class="text-center mb-5 fw-bold text-danger">🔥 Most Trending Blogs</h2>
                 <div class="row g-4">
-                    <div class="col-md-6" data-aos="fade-right" data-aos-delay="100">
-                        <div class="card shadow-sm border-0 h-100">
-                            <div class="row g-0">
-                                <div class="col-4">
-                                    <img src="https://via.placeholder.com/200x150" class="img-fluid rounded-start"
-                                        alt="Trending 1">
-                                </div>
-                                <div class="col-8">
-                                    <div class="card-body d-flex flex-column justify-content-between">
-                                        <div>
-                                            <h5 class="card-title">Trending Blog One</h5>
-                                            <p class="card-text text-muted">A powerful trending article that's gaining
-                                                attention.</p>
+             @foreach($trending as $post)
+                        <div class="col-md-6" data-aos="fade-right" data-aos-delay="100">
+                            <div class="card shadow-sm border-0 h-100">
+                                <div class="row g-0">
+                                    <div class="col-4">
+                                        <img src="{{ asset('uploads/blogs/'.$post->image )}}" class="img-fluid rounded-start" alt="Trending 1">
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="card-body d-flex flex-column justify-content-between">
+                                            <div>
+                                                <h5 class="card-title">{{ $post->title }}</h5>
+                                                <p class="card-text text-muted">{{ Str::limit($blog->content, 50) }}</p>
+                                            </div>
+                                            <a href="singlepost/{{ $post->id }}" class="btn btn-primary mt-2">Read More</a>
                                         </div>
-                                        <a href="category" class="btn btn-primary mt-2">Read More</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-6" data-aos="fade-left" data-aos-delay="200">
-                        <div class="card shadow-sm border-0 h-100">
-                            <div class="row g-0">
-                                <div class="col-4">
-                                    <img src="https://via.placeholder.com/200x150" class="img-fluid rounded-start"
-                                        alt="Trending 2">
-                                </div>
-                                <div class="col-8">
-                                    <div class="card-body d-flex flex-column justify-content-between">
-                                        <div>
-                                            <h5 class="card-title">Trending Blog Two</h5>
-                                            <p class="card-text text-muted">Another hot pick loved by readers this week.
-                                            </p>
-                                        </div>
-                                        <a href="category" class="btn btn-primary mt-2">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
 
                 </div>
             </div>
