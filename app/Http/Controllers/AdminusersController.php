@@ -8,47 +8,63 @@ use App\Models\users;
 class AdminusersController extends Controller
 {
 
-    function create(){
-        
+    function create()
+    {
+
         return view("admin.users.adduser");
     }
-    function list(){
-        $users = users::all();
+    function list(Request $request)
+    {
 
-        return view("admin.users.userslist",["users" =>$users]);
+        $search = $request->input('search');
+
+        $users = Users::when($search, function ($query, $search) {
+            $query->where('first_name', 'like', "%$search%")
+                ->orWhere('middle_name', 'like', "%$search%")
+                ->orWhere('last_name', 'like', "%$search%")
+                ->orWhere('email', 'like', "%$search%");
+        })
+            ->orderBy('id', 'desc')
+            ->paginate(10)
+            ->withQueryString();
+
+        return view("admin.users.userslist", ["users" => $users]);
     }
 
-    function edit($id){
+    function edit($id)
+    {
         $user = users::findOrFail($id);
-        return view("admin.users.usersedit",["user"=>$user]);
+        return view("admin.users.usersedit", ["user" => $user]);
     }
-    function updateuser(Request $request){
+    function updateuser(Request $request)
+    {
         // return $request->all();
         $request->validate([
-            "role"=>"required",
+            "role" => "required",
         ]);
 
         $user = users::findOrFail($request->id);
         $user->role = $request->role;
-        if($user->update()){
-            return redirect("listusers")->with("success","User updated successfully");
-        }else{
-            return back()->with("fail","Something went wrong");
+        if ($user->update()) {
+            return redirect("listusers")->with("success", "User updated successfully");
+        } else {
+            return back()->with("fail", "Something went wrong");
         }
 
-    
+
     }
 
 
-    function deleteuser(Request $request){
+    function deleteuser(Request $request)
+    {
         // return $request;
         $user = users::find($request->id);
         // delete user
 
-        if($user->delete()){
+        if ($user->delete()) {
 
             return back()->with("success, Record Deleted Successfully");
-        }else{
+        } else {
             return back()->with("error, Record Not deleted");
         }
     }

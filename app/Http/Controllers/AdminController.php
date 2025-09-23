@@ -31,8 +31,10 @@ class AdminController extends Controller
         ]);
     }
 
-    function blogg()
+    function blogg(Request $request)
     {
+        $user_id = $request->session()->get("LoggedUser")->id;
+        // return $user_id;
         $blogs = DB::table('post')
             ->join('category', 'post.category_id', '=', 'category.id')
             ->join('user', 'post.user_id', '=', 'user.id')
@@ -43,6 +45,7 @@ class AdminController extends Controller
                 'user.middle_name as user_middle_name',
                 'user.last_name as user_last_name'
             )
+            ->where("post.user_id","=",$user_id)
             ->orderBy('post.id', 'desc')
             ->get();
 
@@ -169,7 +172,7 @@ class AdminController extends Controller
             "middle_name" => "nullable",
             "last_name" => "required",
             "email" => "required|email",
-            "profileImage" => "nullable|mimes:jpg,jpeg,png|max:2048",
+            "profileImage" => "nullable|image",
         ]);
 
         // User find karo
@@ -183,14 +186,13 @@ class AdminController extends Controller
             "email" => $request->email,
         ];
 
-        // Agar image aayi hai to upload karo
+        $imageName = null;
         if ($request->hasFile('profileImage')) {
             $image = $request->file('profileImage');
-            $imageName = time() . '.' . $image->extension();
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('uploads/profile'), $imageName);
 
-            // Array me path add karo
-            $data["image_path"] = 'uploads/profile/' . $imageName;
+            $data["image_path"] = $imageName;
         }
 
         // Direct update

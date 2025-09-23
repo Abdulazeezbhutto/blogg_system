@@ -77,38 +77,37 @@
                                 </thead>
                                 <tbody>
                                     @forelse($users as $index => $user)
-                                                                    <tr>
-                                                                        <td>{{ $index + 1 }}</td>
-                                                                        <td>
-                                                                            <img src="{{ $user->image_path
-                                        ? asset('uploads/profile/'.$user->image_path)
-                                        : 'https://via.placeholder.com/50' }}" alt="Profile"
-                                                                                class="rounded-circle shadow-sm" width="50" height="50">
-                                                                        </td>
-                                                                        <td>{{ $user->first_name . " " . $user->middle_name . " " . $user->last_name }}</td>
-                                                                        <td>{{ $user->email }}</td>
-                                                                        <td>
-                                                                            <span
-                                                                                class="badge {{ $user->role == "admin" ? 'bg-primary' : 'bg-secondary' }}">
-                                                                                {{ ucfirst($user->role) }}
-                                                                            </span>
-                                                                        </td>
-                                                                        <td>{{ $user->created_at->format('M d, Y') }}</td>
-                                                                        <td>
-                                                                            <a href="{{ url('edituser/' . $user->id) }}" class="btn btn-sm btn-primary">
-                                                                                <i class="bi bi-pencil"></i> Edit
-                                                                            </a>
-                                                                            <form action="{{ url('deleteuser') }}" method="POST"
-                                                                                style="display:inline;">
-                                                                                @csrf
-                                                                                <input type="hidden" name="id" value="{{ $user->id }}">
-                                                                                <button type="submit" class="btn btn-sm btn-danger"
-                                                                                    onclick="return confirm('Are you sure you want to delete this user?');">
-                                                                                    <i class="bi bi-trash"></i> Delete
-                                                                                </button>
-                                                                            </form>
-                                                                        </td>
-                                                                    </tr>
+                                        <tr>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>
+                                                <img src="{{ $user->image_path ? asset("uploads/profile/" . $user->image_path) : 'https://via.placeholder.com/50' }}"
+                                                    alt="Profile" class="rounded-circle shadow-sm" width="50" height="50">
+                                            </td>
+                                            <td>{{ $user->first_name . " " . $user->middle_name . " " . $user->last_name }}
+                                            </td>
+                                            <td>{{ $user->email }}</td>
+                                            <td>
+                                                <span
+                                                    class="badge {{ $user->role == "admin" ? 'bg-primary' : 'bg-secondary' }}">
+                                                    {{ ucfirst($user->role) }}
+                                                </span>
+                                            </td>
+                                            <td>{{ $user->created_at->format('M d, Y') }}</td>
+                                            <td>
+                                                <a href="{{ url('edituser/' . $user->id) }}" class="btn btn-sm btn-primary">
+                                                    <i class="bi bi-pencil"></i> Edit
+                                                </a>
+                                                <form action="{{ url('deleteuser') }}" method="POST"
+                                                    style="display:inline;">
+                                                    @csrf
+                                                    <input type="hidden" name="id" value="{{ $user->id }}">
+                                                    <button type="submit" class="btn btn-sm btn-danger"
+                                                        onclick="return confirm('Are you sure you want to delete this user?');">
+                                                        <i class="bi bi-trash"></i> Delete
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
                                     @empty
                                         <tr>
                                             <td colspan="7" class="text-center text-muted">No users found.</td>
@@ -116,7 +115,9 @@
                                     @endforelse
                                 </tbody>
                             </table>
-
+                            <div class="d-flex justify-content-center mt-3">
+                                {{ $users->links('pagination::bootstrap-5') }}
+                            </div>
                         </div>
                     </div>
                 </div>

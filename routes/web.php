@@ -21,9 +21,11 @@ Route::view("signup","auth.signupform")->name("signup");
 Route::get("bloggs",[PublicController::class,"bloggs"]);
 Route::get("category/{id}",[PublicController::class,"category"]);
 Route::get("singlepost/{id}",[PublicController::class,"singlepost"]);
-Route::view("about","about")->name("about");
+Route::get("about",[PublicController::class,"about"]);
 Route::view("contact","contactus")->name("contact");
+Route::post("message",[PublicController::class,"message"]);
 Route::post("addcomment",[PublicController::class, "addcomment"]);
+Route::post("newsteller",[PublicController::class,"newsteller"]);
 
 //Auth Routes ___________________________________________________________
 Route::post("signup",[AuthController::class,"signup"]);

@@ -41,11 +41,11 @@
 
                     <!-- Author Section -->
                     <div class="d-flex align-items-center mb-5" data-aos="fade-up" data-aos-delay="400">
-                        <img src="{{asset('uploads/profile/' . $post[0]->author_profile)}}" class="rounded-circle me-3"
-                            alt="Author">
+                        <img src="{{asset('uploads/profile/' . $post[0]->author_profile)}}" class="rounded-circle me-3" 
+                            alt="Author" width = "50px">
                         <div>
                             <h6 class="fw-bold mb-0">{{ $post[0]->author_role }}</h6>
-                            <p class="text-muted mb-0">About Author .</p>
+                            <a href="{{ url("about") }}"><p class="text-muted mb-0">About Author .</p></a>
                         </div>
                     </div>
 

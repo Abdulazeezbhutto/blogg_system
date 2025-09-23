@@ -10,8 +10,7 @@ class AuthController extends Controller
 {
     function signup(Request $request)
     {
-        // return $request->all();
-        // die();
+    
         $request->validate([
             'first_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
@@ -20,19 +19,18 @@ class AuthController extends Controller
             'password' => 'required|string|min:8',
             'address' => 'nullable|string|max:500',
             'phone_number' => 'string|max:15',
-            'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'profileImage' => 'nullable|image|',
         ]);
 
         // image handling
-        if ($request->hasFile('image_path')) {
-            $imageName = time() . '.' . $request->image_path->extension();
-            $request->image_path->move(public_path('images'), $imageName);
-            $request->merge(['image_path' => 'images/' . $imageName]);
-        } else {
-            // agar user image upload nahi kare to default image set kar do
-            $request->merge(['image_path' => 'images/default.png']);
+        $imageName = null;
+        if ($request->hasFile('profileImage')) {
+            $image = $request->file('profileImage');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/profile'), $imageName);
         }
 
+        // return $imageName;
 
         $request->merge(['password' => Hash::make($request->password)]);
         $table = new users([
@@ -44,7 +42,7 @@ class AuthController extends Controller
             'address' => $request->address,
             'phone_number' => $request->phone_number,
             'remember_token' => \Str::random(10),
-            'image_path' => $request->image_path ?? null,
+            'image_path' => $imageName ?? null,
             'role' => 'user',
         ]);
 

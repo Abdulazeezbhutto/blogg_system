@@ -45,7 +45,7 @@
                                     @endif
 
                                     <!-- Profile Image -->
-                                    <img src="{{$user->image_path ? asset('uploads/profile_images/'.$user->image_path) : 'profile' }}"
+                                    <img src="{{$user->image_path ? asset("uploads/profile/".$user->image_path) : 'okay' }}"
                                         class="rounded-circle mb-3 border shadow-sm" width="120" height="120"
                                         alt="Profile Image">
 

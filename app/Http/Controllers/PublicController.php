@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 use App\Models\post;
+use App\Models\users;
 use Illuminate\Http\Request;
 use App\Models\comment;
 use App\Models\categories;
+use App\Models\contact;
+use App\Models\newsteller;
 use Illuminate\Support\Facades\DB;
 
 class PublicController extends Controller
@@ -13,7 +16,7 @@ class PublicController extends Controller
     function homepage()
     {
         // fetch all by category {distinct}
-        $posts = post::all();
+        $posts = Post::orderBy('post.id', 'desc')->get();
 
 
 
@@ -91,7 +94,7 @@ class PublicController extends Controller
 
         // Logged-in user (agar tum sessions use kar rahe ho)
         $user_id = $request->session()->get("LoggedUser")->id ?? 0;
-        
+
         // Create comment
         $result = Comment::create([
             "comment_content" => $request->input("comment"),
@@ -104,5 +107,57 @@ class PublicController extends Controller
         } else {
             return back()->with("error", "Something went wrong, please try again.");
         }
+    }
+
+    function about()
+    {
+        // return $id;
+        $admins = Users::where('role', 'admin')->get();
+        // return $admins;
+        return view("about", ["admins" => $admins]);
+
+    }
+
+
+    function message(Request $request)
+    {
+        // return $request->all();
+        $request->validate([
+            "name" => "required",
+            "email" => "required|email",
+            "subject" => "required",
+            "message" => "required"
+        ]);
+
+        $result = contact::create([
+            "name" => $request->name,
+            "email" => $request->email,
+            "subject" => $request->subject,
+            "message" => $request->message,
+        ]);
+
+        if ($result) {
+            return redirect()->back()->with("success", "message sent successfully");
+        } else {
+            return redirect()->back()->with("error", "something went wrong");
+        }
+    }
+
+    function newsteller(Request $request)
+    {
+        $request->validate([
+            "email" => "required|email|unique:newstellers,email"
+        ]);
+
+        $result = Newsteller::create([
+            "email" => $request->email
+        ]);
+
+        if ($result) {
+            return redirect()->back()->with("success", "Successfully Subscribed");
+        } else {
+            return redirect()->back()->with("error", "Something Went Wrong");
+        }
+
     }
 }

@@ -8,7 +8,7 @@
                 <h3 class="text-center fw-bold mb-4">User Panel</h3>
                 <ul class="nav flex-column">
                     <li class="nav-item mb-2">
-                        <a href="userdashboard" class="nav-link text-white"><i class="bi bi-person me-2"></i>
+                        <a href="userprofile" class="nav-link text-white"><i class="bi bi-person me-2"></i>
                             Profile</a>
                     </li>
                      <li class="nav-item mb-2">
@@ -25,86 +25,16 @@
             <!-- Main Content -->
             <div class="flex-grow-1" style="margin-left: 250px;">
                 <!-- Topbar -->
-                <x-usertopbar></x-usertopbar>
+                
+                    <nav class="navbar navbar-light bg-white shadow-sm px-4 sticky-top">
+                    <span class="navbar-brand fw-bold">Dashboard</span>
+                    <div class="d-flex align-items-center">
+                        <span class="me-3">Welcome, User</span>
+                        <img src="{{ asset('uploads/profile/') }}" class="rounded-circle" alt="User" width = "50px">
 
-                <!-- Profile Info -->
-                <div class="container-fluid py-5">
-                    <div class="row justify-content-center">
-                        <!-- Profile Card -->
-                        <div class="col-md-4 mb-4">
-                            <div class="card shadow-sm border-0 text-center p-4 mx-auto" style="max-width: 300px;">
-                                <img src="https://via.placeholder.com/200" id="previewImage"
-                                    class="rounded-circle shadow mb-3 mx-auto d-block" width="200" height="200"
-                                    alt="Profile Image">
-                                <h5 class="fw-bold">John Doe</h5>
-                                <p class="text-muted">johndoe@example.com</p>
-                            </div>
-                        </div>
-
-                        <!-- Edit Info Form -->
-                        <div class="col-md-6">
-                            <div class="card shadow-sm border-0">
-                                <div class="card-header bg-primary text-white fw-bold">Account Information</div>
-                                <div class="card-body">
-                                    <form action="/user/profile/update" method="POST" enctype="multipart/form-data">
-                                        <!-- @csrf -->
-
-                                        <!-- Profile Image -->
-                                        <div class="mb-3">
-                                            <label for="profileImage" class="form-label">Change Profile Image</label>
-                                            <input type="file" class="form-control" id="profileImage"
-                                                name="profileImage" accept="image/*">
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label for="firstName" class="form-label">First Name</label>
-                                                <input type="text" id="firstName" name="first_name" class="form-control"
-                                                    value="John" required>
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label for="lastName" class="form-label">Last Name</label>
-                                                <input type="text" id="lastName" name="last_name" class="form-control"
-                                                    value="Doe" required>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label for="email" class="form-label">Email Address</label>
-                                            <input type="email" id="email" name="email" class="form-control"
-                                                value="johndoe@example.com" required>
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label for="address" class="form-label">Address</label>
-                                            <input type="text" id="address" name="address" class="form-control"
-                                                value="123 Main St">
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label for="city" class="form-label">City</label>
-                                                <input type="text" id="city" name="city" class="form-control"
-                                                    value="Karachi">
-                                            </div>
-                                            <div class="col-md-6 mb-3">
-                                                <label for="state" class="form-label">State</label>
-                                                <select id="state" name="state" class="form-select">
-                                                    <option>Sindh</option>
-                                                    <option>Punjab</option>
-                                                    <option>Balochistan</option>
-                                                    <option>KPK</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <button type="submit" class="btn btn-primary w-100">Update Profile</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-                </div>
+                </nav>
+               
 
             </div>
         </div>
